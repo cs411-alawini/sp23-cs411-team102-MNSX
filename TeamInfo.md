@@ -1,4 +1,4 @@
-# Q-team000-sample
+# team000-sample
 
 ## Basic Information
 
@@ -10,10 +10,10 @@
 | Captain     |  alawini@illinois.edu  |
 | Member1     |        Kevin Pei       |
 | Member1     |   kevin2@illinois.edu  |
-| Member2     |                        |
-| Member2     |                        |
-| Member3     |                        |
-| Member3     |                        |
+| Member2     |  Dattatreya Mohapatra  |
+| Member2     |   datta1@illinois.edu  |
+| Member3     |     Ti-Chung Cheng     |
+| Member3     |  tichung3@illinois.edu |
 
 ## Project Information
 
