@@ -1,19 +1,19 @@
-# team000-sample
+# team102-MNSX
 
 ## Basic Information
 
 |   Info      |        Description     |
 | ----------- | ---------------------- |
-| TeamID      |        Team-000        |
-| TeamName    |         sample         |
-| Captain     |       Abdu Alawini     |
-| Captain     |  alawini@illinois.edu  |
-| Member1     |        Kevin Pei       |
-| Member1     |   kevin2@illinois.edu  |
-| Member2     |  Dattatreya Mohapatra  |
-| Member2     |   datta1@illinois.edu  |
-| Member3     |     Ti-Chung Cheng     |
-| Member3     |  tichung3@illinois.edu |
+| TeamID      |        Team-102        |
+| TeamName    |          MNSX          |
+| Captain     |        Siya Digra      |
+| Captain     |  sdigra2@illinois.edu  |
+| Member1     |       Minghua Yang     |
+| Member1     |  minghua3@illinois.edu |
+| Member2     |       Nisha Prasad     |
+| Member2     |   nishap4@illinois.edu |
+| Member3     |        Xiaofan Li      |
+| Member3     |    xl121@illinois.edu  |
 
 ## Project Information
 
