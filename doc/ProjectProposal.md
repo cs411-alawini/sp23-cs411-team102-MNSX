@@ -25,6 +25,8 @@ On a more complex level, we aim to integrate signing in with Google into our web
 
 Low-Fidelity UI Mockup:
 
+![image](doc/UI mockup.jpg)
+
 
 ## Project Work Distribution
 
