@@ -37,3 +37,4 @@ Nisha: Create table to store history for each user, find way to host backend, he
 Siya: Queries to find games based on filters, queries to find games based on inputted games, outputting links for suggested games, adding suggested games to history database table built by Nisha, help with frontend as needed
 
 Xiaofan: Building out the infrastructure of the front-end/continue to develop the web app, host the website on a custom url, find similarities between users and display users
+

@@ -27,3 +27,4 @@ GenreofGame(gameID: int [FK to Games.gameID], genreName: varchar(255) [FK to Gen
 PlatformofGame(gameID: int [FK to Games.gameID], platformName: varchar(255) [FK to Platform.platformName])
 
 SearchHistory(searchID: int [PK], username: varchar(255) [FK to Users.username], gameID: int)
+
