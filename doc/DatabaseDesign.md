@@ -1,5 +1,5 @@
 ## ERD
-![ERD_img](ERD.png)
+![ERD_img](./figures/ERD.png)
 
 ## Assumptions
 
@@ -10,20 +10,20 @@ The database includes a description of Users, which are uniquely identified by t
 Users each have a search history, but each search history can only have one corresponding user. Each user can rate multiple games, and each game can be rated by multiple users, with each user’s rating being stored. Each user can connect with other users as friends, and a user can have zero to many friended users. Games belong to genres and can have one or more. Genres can also have one or more games encompassed by them (we consider a genre to be a genre only if there is at least one game of that genre). Games can be supported by many platforms but must be supported by at least one, and a platform can support many games but must support at least one to be a valid platform.
 
 ### Relational Schema:
-Users(username: varchar(20) [PK], password: varchar(255))
+Users(username: varchar(255) [PK], password: varchar(255))
 
-Games(gameID: int [PK], name: varchar(20), short-description: varchar(255), steam-rating: int, price: int, website: varchar(255))
+Games(gameID: int [PK], name: varchar(255), description: text(65535), steamRating: int, price: int, website: varchar(255))
 
-Platform(platformName: varchar(20) [PK])
+Platform(platformName: varchar(255) [PK])
 
-Genre(genreName: varchar(20) [PK])
+Genre(genreName: varchar(255) [PK])
 
-Ratings(username: varchar(20) [FK to Users.username], gameID: int [FK to Games.gameID], rating: int)
+Ratings(username: varchar(255) [FK to Users.username], gameID: int [FK to Games.gameID], rating: int)
 
-Friends(username: varchar(20) [FK to Users.username], username(as friendname): varchar(20) [FK to Users.username])
+Friends(username: varchar(255) [FK to Users.username], friendname: varchar(255) [FK to Users.username])
 
-GenreofGame(gameID: int [FK to Games.gameID], genreName: varchar(20) [FK to Genre.genreName])
+GenreofGame(gameID: int [FK to Games.gameID], genreName: varchar(255) [FK to Genre.genreName])
 
-PlatformofGame(gameID: int [FK to Games.gameID], platformName: varchar(20) [FK to Platform.platformName])
+PlatformofGame(gameID: int [FK to Games.gameID], platformName: varchar(255) [FK to Platform.platformName])
 
-SearchHistory(searchID: int [PK], username: varchar(20) [FK to Users.username], gameID: int)
+SearchHistory(searchID: int [PK], username: varchar(255) [FK to Users.username], gameID: int)

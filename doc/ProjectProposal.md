@@ -25,17 +25,15 @@ On a more complex level, we will have users enter username and password to log i
 
 Low-Fidelity UI Mockup:
 
-![UI_mockup_img](UI_mockup.jpg)
+![UI_mockup_img](./figures/UI_mockup.jpg)
 
 
 ## Project Work Distribution
 
-Minghua: Integrate google sign in, aid in building infrastructure of front-end/flush out details, find similarities between users and display users
+Minghua: Integrate user register, login, logout, aid in building infrastructure of front-end/flush out details, find similarities between users and display users
 
 Nisha: Create table to store history for each user, find way to host backend, help with frontend as needed
 
 Siya: Queries to find games based on filters, queries to find games based on inputted games, outputting links for suggested games, adding suggested games to history database table built by Nisha, help with frontend as needed
 
 Xiaofan: Building out the infrastructure of the front-end/continue to develop the web app, host the website on a custom url, find similarities between users and display users
-
-
