@@ -1,7 +1,7 @@
 ## GCP Connection
 ![GCP_connect](./figures/DB_connection.jpg)
 
-## DDL:
+## DDL
 CREATE TABLE Users(username varchar(255) primary key, password varchar(255));
 
 CREATE TABLE Games(gameID int primary key, name varchar(255), description text(65535), steamRating int, price int, website varchar(255));
