@@ -28,3 +28,23 @@ PlatformofGame(gameID: int [FK to Games.gameID], platformName: varchar(255) [FK 
 
 SearchHistory(searchID: int [PK], username: varchar(255) [FK to Users.username], gameID: int)
 
+### DDL Commands:
+
+CREATE TABLE Users(username varchar(255) primary key, password varchar(255));
+
+CREATE TABLE Games(gameID int primary key, name varchar(255), description text(65535), steamRating int, price int, website varchar(255));
+
+CREATE TABLE Platform(platformName varchar(255) primary key);
+
+CREATE TABLE Genre(genreName varchar(255) primary key);
+
+CREATE TABLE Ratings(username varchar(255), gameID int, rating int, foreign key (username) references Users(username) on delete cascade on update cascade, foreign key (gameID) references Games(gameID) on delete cascade on update cascade);
+
+CREATE TABLE Friends(username varchar(255), friendname varchar(255), foreign key (username) references Users(username) on delete cascade on update cascade, foreign key (friendname) references Users(username) on delete cascade on update cascade);
+
+CREATE TABLE GenreofGame(gameID int, genreName varchar(255), foreign key (gameID) references Games(gameID) on delete cascade on update cascade, foreign key (genreName) references Genre(genreName) on delete cascade on update cascade);
+
+CREATE TABLE PlatformofGame(gameID int, platformName varchar(255), foreign key (gameID) references Games(gameID) on delete cascade on update cascade, foreign key (platformName) references Platform(platformName) on delete cascade on update cascade);
+
+CREATE TABLE SearchHistory(searchID int, username varchar(255), gameID int, primary key (searchID, username), foreign key (username) references Users(username) on delete cascade on update cascade);
+
