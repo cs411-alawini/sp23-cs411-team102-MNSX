@@ -90,7 +90,7 @@ Since we need to compute the AVG(price), we add an index price_idx. The cost inc
 #### Default index + steamRating_idx + price_idx + descrip_idx:
 CREATE INDEX descrip_idx ON Games(description(10));
 ![Query2_index_4](figures/Q2_index_4.jpg)
-// TODO
+Since we need to filter (description <> ""), we add an index descrip_idx. The cost, actual time and rows for Temporary table with deduplication lower from 2591.41..2603.07, 27.486..27.841, 735 to 2380.79..2388.37, 22.940..23.324, 408 because "description" is in the WHERE clause to filter records and we'll have less rows and costs on this step after we add descip_idx. And the cost and rows for Nested loop inner join also lower from 2517.90, 735 to 2339.95, 408. In addition, the overall execution time lower from 0.03 sec to 0.02 sec, which indicates that the above three indexes help improve the overall performance.
 
 ### Chosen Index Design
 We decided to go with the index design that used 4 indexes for both queries (Default index + steamRating_idx + price_idx + website_idx for Query 1 and Default index + steamRating_idx + price_idx + descrip_idx for Query 2). For Query 1, this makes sense since compared to just the normal index, we were able to decrease the overall time the query took by 0.01 seconds and decrease the cost of the nested loop inner join used by 7,850.92 units total. It also makes good sense to do this for Query 2, as using the 4-indexed design lowers the overall query time by 0.01 seconds where the other queries do not. While the costs for this query are not necessarily reduced as drastically as the first, they still are somewhat reduced for some of the more costly operations, and the last 4-indexed design reduces overall time the most regardless, making it the best choice to go with.
