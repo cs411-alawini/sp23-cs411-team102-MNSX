@@ -28,7 +28,7 @@ PlatformofGame(gameID: int [FK to Games.gameID], platformName: varchar(255) [FK 
 
 SearchHistory(searchID: int [PK], username: varchar(255) [FK to Users.username], gameID: int)
 
-### DDL Commands:
+## DDL Commands:
 
 CREATE TABLE Users(username varchar(255) primary key, password varchar(255));
 
