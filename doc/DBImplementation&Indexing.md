@@ -91,3 +91,6 @@ Since we need to compute the AVG(price), we add an index price_idx. We can find 
 CREATE INDEX descrip_idx ON Games(description(10));
 ![Query2_index_4](figures/Q2_index_4.jpg)
 // TODO
+
+### Chosen Index Design
+We decided to go with the index design that used 4 indexes for both queries (Default index + steamRating_idx + price_idx + website_idx for Query 1 and Default index + steamRating_idx + price_idx + descrip_idx for Query 2). For Query 1, this makes sense since compared to just the normal index, we were able to decrease the overall time the query took by 0.01 seconds and decrease the cost of the nested loop inner join used by 7,850.92 units total. It also makes good sense to do this for Query 2, as using the 4-indexed design lowers the overall query time by 0.01 seconds where the other queries do not. While the costs for this query are not necessarily reduced as drastically as the first, they still are somewhat reduced for some of the more costly operations, and the last 4-indexed design reduces overall time the most regardless, making it the best choice to go with.
