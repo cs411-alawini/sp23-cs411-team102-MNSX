@@ -63,7 +63,7 @@ Since we need to compute the AVG(price), we add an index price_idx. We can find 
 #### Default index + steamRating_idx + price_idx + website_idx:
 CREATE INDEX website_idx ON Games(website(10));
 ![Query1_index_4](figures/Q1_index_4.jpg)
-Since we need to filter (website <> "None"), we add an index website_idx. We can find that the cost, rows, actual time for Nested loop inner join lower from 16818.70, 33589, 63.479 to 8967.78, 21685, 57.191 because "website" is in the WHERE clause to filter records and we'll have less rows and cost on this step after we add the website_idx. And the actual time for Aggregate using temporary table lower from 93.982..93.986 to 88.071..88.075. In conclusion, adding the above three indexes help improve the overall performance by 0.01 sec.
+Since we need to filter (website <> "None"), we add an index website_idx. We can find that the cost, rows, actual time for Nested loop inner join lower from 16818.70, 33589, 63.479 to 8967.78, 21685, 57.191 because "website" is in the WHERE clause to filter records and we'll have less rows and cost on this step after we add the website_idx. And the actual time for Aggregate using temporary table lower from 93.982..93.986 to 88.071..88.075. In conclusion, adding the above three indexes help improve the overall performance by 0.01 seconds.
 
 ### Query 2
 
