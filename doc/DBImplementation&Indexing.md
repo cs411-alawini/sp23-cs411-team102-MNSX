@@ -80,12 +80,12 @@ EXPLAIN ANALYZE SELECT DISTINCT name, description, steamRating, price FROM Platf
 #### Default index + steamRating_idx:
 CREATE INDEX steamRating_idx ON Games(steamRating);
 ![Query2_index_2](figures/Q2_index_2.jpg)
-Since we only want to select rows where the steamRating is not equal to 0, we add a steamRating_idx. The cost decreases from 2785.76 to 2072.13. The overall query time remains the same at 0.03 sec.
+// TODO
 
 #### Default index + steamRating_idx + price_idx:
 CREATE INDEX price_idx ON Games(price);
 ![Query2_index_3](figures/Q2_index_3.jpg)
-// TODO
+Since we need to compute the AVG(price), we add an index price_idx. We can find that the actual time for Aggregate using temporary table lower from 32.946...33.313 to 27.486...27.841, and the overall execution time stays the same for 0.03 sec.
 
 #### Default index + steamRating_idx + price_idx + descrip_idx:
 CREATE INDEX descrip_idx ON Games(description(10));
