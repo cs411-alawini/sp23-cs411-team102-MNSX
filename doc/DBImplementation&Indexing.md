@@ -37,15 +37,10 @@ LIMIT 15;
 This query finds the average rating and price, and the total number of games in each genre, and we add the constraint (website <> "None") to ensure that each game record is valid.
 
 ### Query 2:
-SELECT DISTINCT name, description, steamRating, price
-FROM PlatformofGame NATURAL JOIN (SELECT * FROM Games NATURAL JOIN GenreofGame WHERE genreName = "Action" AND description <> "" AND steamRating <> 0 AND price < 30) as temp
-WHERE platformName = "PlatformWindows" OR platformName = "PlatformMac"
-LIMIT 15;
+
 
 #### Result:
-![Query2_result](figures/Query2.jpg)
 
-This query first uses a subquery to find all "Action" games and we add a constraint that the description and rating are not empty, and the price is lower than 30. Then, it finds out the games that are supported by PlatformWindows and PlatformMac.
 
 ## Indexing Analysis
 ### Query 1
@@ -72,22 +67,3 @@ Since we need to filter (website <> "None"), we add an index website_idx. We can
 
 ### Query 2
 
-EXPLAIN ANALYZE SELECT DISTINCT name, description, steamRating, price FROM PlatformofGame NATURAL JOIN (SELECT * FROM Games NATURAL JOIN GenreofGame WHERE genreName = "Action" AND description <> "" AND steamRating <> 0 AND price < 30) as temp WHERE platformName = "PlatformWindows" OR platformName = "PlatformMac";
-
-#### Only default index (gameID, genereName, platformName):
-![Query2_index_1](figures/Q2_index_1.jpg)
-
-#### Default index + steamRating_idx:
-CREATE INDEX steamRating_idx ON Games(steamRating);
-![Query2_index_2](figures/Q2_index_2.jpg)
-// TODO
-
-#### Default index + steamRating_idx + price_idx:
-CREATE INDEX price_idx ON Games(price);
-![Query2_index_3](figures/Q2_index_3.jpg)
-// TODO
-
-#### Default index + steamRating_idx + price_idx + descrip_idx:
-CREATE INDEX descrip_idx ON Games(description(10));
-![Query2_index_4](figures/Q2_index_4.jpg)
-// TODO
