@@ -1,0 +1,82 @@
+body {
+    overflow: hidden;
+}
+
+.formContainer {
+    background-image: url('../images/steam_homepage.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .formWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        align-items: center;
+        background-color: #181A21;
+        padding: 24px 70px;
+        border-radius: 10px;
+
+        .logo {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 26px;
+        }
+
+        .title {
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            input {
+                padding: 15px;
+                border: none;
+                border-radius: 2px;
+                outline-color: #b0dbfd;
+                width: 280px;
+                color: #ffffff;
+                background-color: #32353C;
+                border-bottom: 1px solid #b0dbfd;
+                &::placeholder {
+                    color: #b0dbfd;
+                    font-weight: 600;
+                }
+            }
+
+            button {
+                background-color: #7b96ec;
+                color: #ffffff;
+                padding: 10px;
+                font-size: 14px;
+                font-weight: bold;
+                border: none;
+                border-radius: 2px;
+                cursor: pointer;
+            }
+        }
+
+        p {
+            color: #ffffff;
+            font-size: 12px;
+            margin-top: 10px;
+            a {
+                color: #ffffff;
+                &:active {
+                    color: #ffffff;
+                }
+            }
+        }
+
+        .errMessage {
+            color: red;
+        }
+    }
+}
