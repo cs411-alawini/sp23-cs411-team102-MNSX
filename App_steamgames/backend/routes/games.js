@@ -4,7 +4,7 @@ import { db } from "../index.js";
 const gameRoutes = express.Router();
 
 // Game search API
-gameRoutes.post("/search", (req, res) => {
+gameRoutes.post("/search/keyword", (req, res) => {
     // Check if game has keyword
     var gameName = req.body.name;
     const q1 = `SELECT * FROM Games WHERE name = '%${gameName}%'`;
