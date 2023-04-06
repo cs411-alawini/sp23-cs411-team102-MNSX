@@ -6,6 +6,8 @@ import friendRoutes from "./routes/friends.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { config } from 'dotenv';
+import historyRoutes from "./routes/history.js";
+import ratingRoutes from "./routes/rating.js";
 config();
 
 
@@ -21,6 +23,8 @@ app.use(cookieParser());
 app.use("/api/users", userRoutes);
 app.use("/api/games", gameRoutes);
 app.use("/api/friends", friendRoutes);
+app.use("/api/history", historyRoutes);
+app.use("/api/rating", ratingRoutes);
 
 export const db = mysql.createConnection({
     host: process.env.DB_host,
