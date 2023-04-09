@@ -42,5 +42,15 @@ gameRoutes.get("/genreinfo", (req, res) => {
     });
 });
 
+// Advanced query to find all action games with non-empty descriptions and ratings with a price below 30 and supported by both Windows and Mac. Limits to 15 games.
+gameRoutes.get("/actiongames", (req, res) => {
+    const q = `SELECT DISTINCT name, description, steamRating, price FROM PlatformofGame NATURAL JOIN (SELECT * FROM Games NATURAL JOIN GenreofGame WHERE genreName = "Action" AND description <> "" AND steamRating <> 0 AND price < 30) as temp WHERE platformName = "PlatformWindows" OR platformName = "PlatformMac" LIMIT 15;`
+
+    db.query(q, (err, data) => {
+        if (err) res.status(500).json({message: err.message});
+        else res.status(200).json({message: 'OK', data});
+    });
+});
+
 
 export default gameRoutes;
