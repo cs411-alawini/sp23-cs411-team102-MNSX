@@ -30,6 +30,8 @@ body {
         padding-top: 20px;
         padding-bottom: 20px;
         overflow-y: auto;
+        position: relative;
+        z-index: 1;
 
         .userinfo {
             display: flex;
@@ -50,9 +52,36 @@ body {
             }
         }
 
+        .genreinfo {
+            display: none;
+            border: 3px solid white;
+            border-radius: 6px;
+            padding: 10px;
+            background-color: #131124;
+            position: absolute;
+            top: 140px;
+            z-index: 2;
+
+            table {
+                th {
+                    text-align: center;
+                    padding: 0px 10px 10px 10px;
+                }
+
+                td {
+                    text-align: center;
+                }
+            }
+        }
+
         .startsearch {
             margin: 0 auto;
             font-size: 24px;
+
+            i {
+                font-size: 16px;
+                cursor: pointer;
+            }
         }
 
         input {

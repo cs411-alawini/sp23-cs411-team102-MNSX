@@ -26,7 +26,6 @@ const GameInfo = (props) => {
             stars[i].classList.remove("active");
             if (i < currentRating) {
                 stars[i].classList.add("active");
-                console.log("gold")
             }
         }
     }, [currentRating, game.gameID]);

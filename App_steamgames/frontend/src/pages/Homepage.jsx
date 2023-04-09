@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/authContext";
 import axios from "axios";
 import "../style/homepage.scss"
@@ -12,6 +12,12 @@ const Homepage = () => {
     const [gamename, setGamename] = useState("");
     const [searchResults, setSearchResults] = useState(null);
     const [searchHistory, setSearchHistory] = useState(null);
+    const [genreinfo, setGenreinfo] = useState(null);
+    const [offsetLeft, setOffsetLeft] = useState("313px");
+
+    const genreinfoStyle = {
+        left: offsetLeft
+    };
 
     const handleLogout = async () => {
         await axios.post("http://localhost:8800/api/users/logout");
@@ -28,6 +34,31 @@ const Homepage = () => {
     const DeleteHistory = async (searchID) => {
         await axios.delete(`http://localhost:8800/api/history/delete/${searchID}`, {withCredentials: true});
     }
+
+    const welcomeSectionRef = useRef();
+    const genreinfoRef = useRef();
+    const showgenreInfo = () => {
+        const welcomeSectionWidth = welcomeSectionRef.current.offsetWidth;
+        const genreinfo = document.getElementsByClassName("genreinfo")[0];
+        genreinfo.style.display = "block";
+        const genreinfoWidth = genreinfoRef.current.offsetWidth;
+        const offset = (welcomeSectionWidth - genreinfoWidth) / 2;
+        setOffsetLeft(`${offset}px`);
+    };
+
+    const closegenreInfo = () => {
+        const genreinfo = document.getElementsByClassName("genreinfo")[0];
+        genreinfo.style.display = "none";
+    };
+
+    useEffect(() => {
+        const getgenreinfo = async () => {
+            const res = await axios.get("http://localhost:8800/api/games/genreinfo");
+            setGenreinfo(res.data.data);
+        };
+
+        getgenreinfo();
+    }, []);
 
     useEffect(() => {
         const Searchgames = async () => {
@@ -63,12 +94,34 @@ const Homepage = () => {
             <div className="friendSection">
                 <p className="title">Friends</p>
             </div>
-            <div className="welcomeSection">
+            <div className="welcomeSection" ref={welcomeSectionRef}>
                 <div className="userinfo">
                     {currentUser && <p className="title">Welcome {currentUser.username}!</p>}
                     {currentUser && <button onClick={handleLogout}>Logout</button>}
                 </div>
-                <p className="startsearch">Search a game to start</p>
+                <p className="startsearch">Search a game to start <span><i className="fa-solid fa-circle-info" onMouseOver={showgenreInfo} onMouseOut={closegenreInfo}></i></span></p>
+                <div className="genreinfo" ref={genreinfoRef} style={genreinfoStyle}>
+                    {genreinfo && <table>
+                        <thead>
+                            <tr>
+                                <th>genreName</th>
+                                <th>AvgRating</th>
+                                <th>AvgPrice</th>
+                                <th>gameNum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {genreinfo?.map((row, index) => (
+                                <tr key={index}>
+                                    <td>{row.genreName}</td>
+                                    <td>{row.AvgRating}</td>
+                                    <td>{row.AvgPrice}</td>
+                                    <td>{row.gameNum}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>}
+                </div>
                 <input type="gamename" placeholder="Enter steamgame name..." name="gamename" value={gamename} onChange={(e) => setGamename(e.target.value)} />
                 <div className="searchresults">
                     {searchResults?.map((game) => (
