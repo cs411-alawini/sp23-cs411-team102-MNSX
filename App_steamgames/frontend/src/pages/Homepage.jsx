@@ -13,9 +13,14 @@ const Homepage = () => {
     const [searchResults, setSearchResults] = useState(null);
     const [searchHistory, setSearchHistory] = useState(null);
     const [genreinfo, setGenreinfo] = useState(null);
+    const [actionGames, setActionGames] = useState(null);
     const [offsetLeft, setOffsetLeft] = useState("313px");
 
     const genreinfoStyle = {
+        left: offsetLeft
+    };
+
+    const actionGamesStyle = {
         left: offsetLeft
     };
 
@@ -51,6 +56,21 @@ const Homepage = () => {
         genreinfo.style.display = "none";
     };
 
+    const actionGamesRef = useRef();
+    const showActionGames = () => {
+        const welcomeSectionWidth = welcomeSectionRef.current.offsetWidth;
+        const actionGames = document.getElementsByClassName("actionGames")[0];
+        actionGames.style.display = "block";
+        const actionGamesWidth = actionGamesRef.current.offsetWidth;
+        const offset = (welcomeSectionWidth - actionGamesWidth) / 2;
+        setOffsetLeft(`${offset}px`);
+    };
+
+    const closeActionGames = () => {
+        const actionGames = document.getElementsByClassName("actionGames")[0];
+        actionGames.style.display = "none";
+    };
+
     useEffect(() => {
         const getgenreinfo = async () => {
             const res = await axios.get("http://localhost:8800/api/games/genreinfo");
@@ -58,6 +78,15 @@ const Homepage = () => {
         };
 
         getgenreinfo();
+    }, []);
+
+    useEffect(() => {
+        const getActionGames = async () => {
+            const res = await axios.get("http://localhost:8800/api/games/actiongames");
+            setGenreinfo(res.data.data);
+        };
+
+        getActionGames();
     }, []);
 
     useEffect(() => {
@@ -117,6 +146,28 @@ const Homepage = () => {
                                     <td>{row.AvgRating}</td>
                                     <td>{row.AvgPrice}</td>
                                     <td>{row.gameNum}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>}
+                </div>
+                <div className="actiongames" ref={actionGamesRef} style={actionGamesStyle}>
+                    {actionGames && <table>
+                        <thead>
+                            <tr>
+                                <th>name</th>
+                                <th>description</th>
+                                <th>steamRating</th>
+                                <th>price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {actionGames?.map((row, index) => (
+                                <tr key={index}>
+                                    <td>{row.name}</td>
+                                    <td>{row.description}</td>
+                                    <td>{row.steamRating}</td>
+                                    <td>{row.price}</td>
                                 </tr>
                             ))}
                         </tbody>
