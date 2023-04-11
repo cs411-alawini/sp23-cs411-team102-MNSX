@@ -18,10 +18,12 @@ const QuerySelector = (props) => {
         const genreSelector = document.getElementsByClassName("genre")[0];
         const platformSelector = document.getElementsByClassName("platform")[0];
 
-        if (!steamRatingSelector?.contains(e.target)) steamRatingSelector.childNodes[1].style.display = "none";
-        if (!priceSelector?.contains(e.target)) priceSelector.childNodes[1].style.display = "none";
-        if (!genreSelector?.contains(e.target)) genreSelector.childNodes[1].style.display = "none";
-        if (!platformSelector?.contains(e.target)) platformSelector.childNodes[1].style.display = "none";
+        if (steamRatingSelector && priceSelector && genreSelector && platformSelector) {
+            if (!steamRatingSelector?.contains(e.target)) steamRatingSelector.childNodes[1].style.display = "none";
+            if (!priceSelector?.contains(e.target)) priceSelector.childNodes[1].style.display = "none";
+            if (!genreSelector?.contains(e.target)) genreSelector.childNodes[1].style.display = "none";
+            if (!platformSelector?.contains(e.target)) platformSelector.childNodes[1].style.display = "none";
+        }
     });
 
     useEffect(() => {
