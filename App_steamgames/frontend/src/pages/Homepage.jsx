@@ -26,6 +26,7 @@ const Homepage = () => {
     });
     const [searchResults, setSearchResults] = useState(null);
     const [searchHistory, setSearchHistory] = useState(null);
+    // const [friendList, setFriendList] = useState(null);             // new
     const [genreinfo, setGenreinfo] = useState(null);
     const [offsetLeft, setOffsetLeft] = useState("313px");
 
@@ -45,6 +46,11 @@ const Homepage = () => {
 
     const DeleteHistory = async (searchID) => {
         await axios.delete(`http://localhost:8800/api/history/delete/${searchID}`, {withCredentials: true});
+    }
+
+    // new
+    const DeleteFriend = async (username) => {
+        await axios.delete(`http://localhost:8800/api/friends/remove/${username}`, {withCredentials: true});
     }
 
     const welcomeSectionRef = useRef();
@@ -71,6 +77,7 @@ const Homepage = () => {
 
         getgenreinfo();
     }, []);
+
 
     useEffect(() => {
         const checkQueryParams = () => {
@@ -119,11 +126,26 @@ const Homepage = () => {
         getHistory();
     }, [searchHistory]);
 
+    // is this right???? god I hope so 
+    // useEffect(() => {
+    //     const getFriends = async () => {
+    //         const res = await axios.post("http://localhost:8800/api/friends/get", {}, {withCredentials: true});
+    //         setFriendList(res.data.friends);
+    //     };
+
+    //     getFriends();
+    // }, [friendList]);
+
 
     return (
         <div className="homepagewrapper">
             <div className="friendSection">
-                <p className="title">Friends</p>
+                {/* <p className="title">Friends</p>
+                <div className="friendlist"> 
+                    {friendList?.map((friend) => (
+                        <p className="friendrecord" key={friend.username}> <span className="deleteicon"><i className="fa-regular fa-trash-can" onClick={(e) => {e.stopPropagation(); DeleteFriend(friend.username)}}></i></span></p>
+                    ))}
+                </div> */}
             </div>
             <div className="welcomeSection" ref={welcomeSectionRef}>
                 <div className="userinfo">
