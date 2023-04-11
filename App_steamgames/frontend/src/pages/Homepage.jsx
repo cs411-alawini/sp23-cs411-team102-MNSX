@@ -3,6 +3,7 @@ import { AuthContext } from "../context/authContext";
 import axios from "axios";
 import "../style/homepage.scss"
 import GameInfo from "./GameInfo";
+import QuerySelector from "./QuerySelector";
 
 
 const Homepage = () => {
@@ -10,19 +11,25 @@ const Homepage = () => {
     const {currentUser, clearUser} = useContext(AuthContext);
 
     const [gamename, setGamename] = useState("");
+    const [queryParams, setQueryParams] = useState({
+        steamRating_low: 0,
+        steamRating_high: 100,
+        price_low: 0,
+        price_high: 450,
+        genre: [],
+        platform: [],
+    });
+    const [additionQparams, setAdditionQparams] = useState({
+        genreIntersect: false,
+        platformIntersect: false,
+        limit: 30
+    });
     const [searchResults, setSearchResults] = useState(null);
     const [searchHistory, setSearchHistory] = useState(null);
     const [genreinfo, setGenreinfo] = useState(null);
-    const [actionGames, setActionGames] = useState(null);
     const [offsetLeft, setOffsetLeft] = useState("313px");
 
-    const genreinfoStyle = {
-        left: offsetLeft
-    };
-
-    const actionGamesStyle = {
-        left: offsetLeft
-    };
+    const genreinfoStyle = {left: offsetLeft};
 
     const handleLogout = async () => {
         await axios.post("http://localhost:8800/api/users/logout");
@@ -56,21 +63,6 @@ const Homepage = () => {
         genreinfo.style.display = "none";
     };
 
-    const actionGamesRef = useRef();
-    const showActionGames = () => {
-        const welcomeSectionWidth = welcomeSectionRef.current.offsetWidth;
-        const actionGames = document.getElementsByClassName("actionGames")[0];
-        actionGames.style.display = "block";
-        const actionGamesWidth = actionGamesRef.current.offsetWidth;
-        const offset = (welcomeSectionWidth - actionGamesWidth) / 2;
-        setOffsetLeft(`${offset}px`);
-    };
-
-    const closeActionGames = () => {
-        const actionGames = document.getElementsByClassName("actionGames")[0];
-        actionGames.style.display = "none";
-    };
-
     useEffect(() => {
         const getgenreinfo = async () => {
             const res = await axios.get("http://localhost:8800/api/games/genreinfo");
@@ -81,17 +73,27 @@ const Homepage = () => {
     }, []);
 
     useEffect(() => {
-        const getActionGames = async () => {
-            const res = await axios.get("http://localhost:8800/api/games/actiongames");
-            setGenreinfo(res.data.data);
+        const checkQueryParams = () => {
+            if (JSON.stringify(queryParams) === JSON.stringify({
+                steamRating_low: 0,
+                steamRating_high: 100,
+                price_low: 0,
+                price_high: 450,
+                genre: [],
+                platform: [],
+            })) return true;
+            else return false;
         };
-
-        getActionGames();
-    }, []);
-
-    useEffect(() => {
+        
         const Searchgames = async () => {
-            const res = await axios.post("http://localhost:8800/api/games/search", {
+            if (checkQueryParams() && JSON.stringify(additionQparams) === JSON.stringify({
+                genreIntersect: false,
+                platformIntersect: false,
+                limit: 30
+            })) var APIurl = `http://localhost:8800/api/games/search`;
+            else APIurl = `http://localhost:8800/api/games/search?steamRating={"low": ${queryParams.steamRating_low}, "high": ${queryParams.steamRating_high}}&price={"low": ${queryParams.price_low}, "high": ${queryParams.price_high}}&genre={"genre": [${queryParams.genre}]}&genreIntersect=${additionQparams.genreIntersect}&platform={"platform": [${queryParams.platform}]}&platformIntersect=${additionQparams.platformIntersect}&limit=${additionQparams.limit}`;
+
+            const res = await axios.post(APIurl, {
                 name: gamename
             });
             if (res.data.gameinfo.length === 0) {
@@ -101,12 +103,12 @@ const Homepage = () => {
             }
         };
 
-        if (gamename !== "") {
+        if (gamename !== "" || !checkQueryParams()) {
             Searchgames();
         } else {
             setSearchResults(null);
         }
-    }, [gamename]);
+    }, [gamename, queryParams, additionQparams]);
 
     useEffect(() => {
         const getHistory = async () => {
@@ -151,29 +153,8 @@ const Homepage = () => {
                         </tbody>
                     </table>}
                 </div>
-                <div className="actiongames" ref={actionGamesRef} style={actionGamesStyle}>
-                    {actionGames && <table>
-                        <thead>
-                            <tr>
-                                <th>name</th>
-                                <th>description</th>
-                                <th>steamRating</th>
-                                <th>price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {actionGames?.map((row, index) => (
-                                <tr key={index}>
-                                    <td>{row.name}</td>
-                                    <td>{row.description}</td>
-                                    <td>{row.steamRating}</td>
-                                    <td>{row.price}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>}
-                </div>
                 <input type="gamename" placeholder="Enter steamgame name..." name="gamename" value={gamename} onChange={(e) => setGamename(e.target.value)} />
+                <QuerySelector setQueryParams={setQueryParams} setAdditionQparams={setAdditionQparams} welcomeSectionRef={welcomeSectionRef} />
                 <div className="searchresults">
                     {searchResults?.map((game) => (
                         <GameInfo game={game} key={game.gameID}/>

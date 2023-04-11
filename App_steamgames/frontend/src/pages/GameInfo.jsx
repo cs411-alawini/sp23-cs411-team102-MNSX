@@ -54,6 +54,8 @@ const GameInfo = (props) => {
                     <p>SteamRating: {game.steamRating}</p>
                     <p>Price: ${game.price}</p>
                     <p>Website: {game.website}</p>
+                    <p>Genres: {game.genreList}</p>
+                    <p>Platforms: {game.platformList}</p>
                     <p>
                         Your Rating: 
                         <span className="ratingstars">
