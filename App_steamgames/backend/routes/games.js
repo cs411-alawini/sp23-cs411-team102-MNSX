@@ -21,20 +21,22 @@ gameRoutes.post("/search", (req, res) => {
         genre = JSON.parse(req.query.genre);
         const genreList = genre.genre;
         if (genreList.length > 0) {
-            q += ` AND (`;
-            genreList.map((genre, idx) => {
-                q += `genreName = '${genre}'`;
-                if (idx !== genreList.length-1) q += ` OR `;
-                else q += `)`;
-            });   
-        }
-        if (genreIntersect === "true" && genreList.length > 0) {
-            q += ` AND (`;
-            genreList.map((genre, idx) => {
-                q += `genreList LIKE '%${genre}%'`;
-                if (idx !== genreList.length-1) q += ` AND `;
-                else q += `)`;
-            });   
+            if (genreIntersect === "true") {
+                q += ` AND (`;
+                genreList.map((genre, idx) => {
+                    q += `genreList LIKE '%${genre}%'`;
+                    if (idx !== genreList.length-1) q += ` AND `;
+                    else q += `)`;
+                });   
+            }
+            else {
+                q += ` AND (`;
+                genreList.map((genre, idx) => {
+                    q += `genreName = '${genre}'`;
+                    if (idx !== genreList.length-1) q += ` OR `;
+                    else q += `)`;
+                });   
+            }
         }
     }
 
@@ -54,19 +56,21 @@ gameRoutes.post("/search", (req, res) => {
         platform = JSON.parse(req.query.platform);
         const platformList = platform.platform;
         if (platformList.length > 0) {
-            q += ` WHERE `;
-            platformList.map((platform, idx) => {
-                q += `platformName = '${platform}'`;
-                if (idx !== platformList.length-1) q += ` OR `;
-            });   
-        }
-        if (platformIntersect === "true" && platformList.length > 0) {
-            q += ` AND (`;
-            platformList.map((platform, idx) => {
-                q += `platformList LIKE '%${platform}%'`;
-                if (idx !== platformList.length-1) q += ` AND `;
-                else q += `)`;
-            });
+            if (platformIntersect === "true") {
+                q += ` WHERE (`;
+                platformList.map((platform, idx) => {
+                    q += `platformList LIKE '%${platform}%'`;
+                    if (idx !== platformList.length-1) q += ` AND `;
+                    else q += `)`;
+                });
+            }   
+            else {
+                q += ` WHERE `;
+                platformList.map((platform, idx) => {
+                    q += `platformName = '${platform}'`;
+                    if (idx !== platformList.length-1) q += ` OR `;
+                });   
+            }
         }
     }
 
