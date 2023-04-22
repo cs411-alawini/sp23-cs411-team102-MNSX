@@ -31,11 +31,13 @@ const GameInfo = (props) => {
     }, [currentRating, game.gameID]);
 
     const setUserRating = async (idx) => {
-        setCurrentRaing(idx);
-        await axios.post("http://localhost:8800/api/rating/set", {
-            gameid: game.gameID,
-            rating: idx
-        }, {withCredentials: true});
+        if (currentRating !== idx) {
+            setCurrentRaing(idx);
+            await axios.post("http://localhost:8800/api/rating/set", {
+                gameid: game.gameID,
+                rating: idx
+            }, {withCredentials: true});
+        }
     };
 
 

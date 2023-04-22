@@ -4,11 +4,18 @@ import axios from "axios";
 import "../style/homepage.scss"
 import GameInfo from "./GameInfo";
 import QuerySelector from "./QuerySelector";
+import { FormControlLabel, Switch } from '@mui/material';
 
 
 const Homepage = () => {
 
     const {currentUser, clearUser} = useContext(AuthContext);
+
+    const [friendsNum, setFriendsNum] = useState(null);
+    const [searchname, setSearchname] = useState("");
+    const [userlist, setUserlist] = useState(null);
+    const [addfriendstatus, setAddfriendstatus] = useState(true);
+    const [friendlist, setFriendlist] = useState(null);
 
     const [gamename, setGamename] = useState("");
     const [queryParams, setQueryParams] = useState({
@@ -63,14 +70,82 @@ const Homepage = () => {
         genreinfo.style.display = "none";
     };
 
+    const updateAddfriendStatus = async () => {
+        await axios.post("http://localhost:8800/api/friends/changestatus", {
+            status: (addfriendstatus ? "False" : "True")
+        }, {withCredentials: true});
+
+        setAddfriendstatus(!addfriendstatus);
+    };
+
+    const handleDeletefriend = async (friendname) => {
+        await axios.post("http://localhost:8800/api/friends/remove", {
+            friendname: friendname
+        }, {withCredentials: true});
+        setFriendlist(friendlist.filter((f) => {return f !== friendname}));
+        setFriendsNum(friendsNum - 1);
+    };
+
+    const checknewfriend = (username) => {
+        const checklist = friendlist.filter((f) => {return f === username});
+        if (checklist.length > 0) return false;
+        else return true;
+    };
+
+    const handleAddfriend = async (newfriend) => {
+        await axios.post("http://localhost:8800/api/friends/add", {
+            friendname: newfriend.username
+        }, {withCredentials: true});
+        setUserlist(userlist.filter((u) => {return u !== newfriend}));
+        setFriendlist(friendlist.concat([newfriend.username]));
+        setFriendsNum(friendsNum + 1);
+    };
+
+
     useEffect(() => {
         const getgenreinfo = async () => {
             const res = await axios.get("http://localhost:8800/api/games/genreinfo");
             setGenreinfo(res.data.data);
         };
 
+        const getaddfriendstatus = async () => {
+            const res = await axios.get("http://localhost:8800/api/friends/getstatus", {withCredentials: true});
+            if (res.data.currentStatus[0].status === "True") setAddfriendstatus(true);
+            else setAddfriendstatus(false);
+        };
+
+        const getfriendlist = async () => {
+            const res = await axios.get("http://localhost:8800/api/friends/friendlist", {withCredentials: true});
+            var flist = [];
+            res.data.friendlist.map((f) => {
+                flist.push(f.friendname);
+                return 1;
+            });
+            setFriendlist(flist);
+        };
+
+        const getfriendsNum = async () => {
+            const res = await axios.get("http://localhost:8800/api/friends/getnum", {withCredentials: true});
+            setFriendsNum(res.data.friendsNum[0].friendsNum);
+        };
+
+        getfriendsNum();
+        getaddfriendstatus();
+        getfriendlist();
         getgenreinfo();
     }, []);
+
+    useEffect(() => {
+        const searchusers = async () => {
+            const res = await axios.post("http://localhost:8800/api/users/findusers", {
+                searchname: searchname
+            }, {withCredentials: true});
+            setUserlist(res.data.userlist);
+        };
+
+        if (searchname !== "") searchusers();
+        else setUserlist(null);
+    }, [searchname]);
 
     useEffect(() => {
         const checkQueryParams = () => {
@@ -122,8 +197,13 @@ const Homepage = () => {
 
     return (
         <div className="homepagewrapper">
-            <div className="friendSection">
-                <p className="title">Friends</p>
+            <div className="historySection">
+                <p className="title">History</p>
+                <div className="historylist">
+                    {searchHistory?.map((history) => (
+                        <p className="historyrecord" key={history.searchID} onClick={() => ClickHistory(history.gameID)}>{history.gameName}<span className="deleteicon"><i className="fa-regular fa-trash-can" onClick={(e) => {e.stopPropagation(); DeleteHistory(history.searchID)}}></i></span></p>
+                    ))}
+                </div>
             </div>
             <div className="welcomeSection" ref={welcomeSectionRef}>
                 <div className="userinfo">
@@ -161,11 +241,24 @@ const Homepage = () => {
                     ))}
                 </div>
             </div>
-            <div className="historySection">
-                <p className="title">History</p>
-                <div className="historylist">
-                    {searchHistory?.map((history) => (
-                        <p className="historyrecord" key={history.searchID} onClick={() => ClickHistory(history.gameID)}>{history.gameName}<span className="deleteicon"><i className="fa-regular fa-trash-can" onClick={(e) => {e.stopPropagation(); DeleteHistory(history.searchID)}}></i></span></p>
+            <div className="friendSection">
+                <p className="title">Friends ({friendsNum})</p>
+                <FormControlLabel className="disturbmodecontrol" control={<Switch color="warning" size="small" checked={!addfriendstatus} onChange={updateAddfriendStatus} />} label="No Disturb Mode" />
+                <div className="searchuser">
+                    <input type="username" placeholder="Search new friends..." value={searchname} onChange={(e) => setSearchname(e.target.value)} />
+                    <div className="resultlist">
+                        {userlist?.map((user) => {
+                            if (checknewfriend(user.username))
+                                return (
+                                    <p key={user.username} className="newfriend"><i className="fa-solid fa-user-plus addfriendicon" onClick={(e) => {e.preventDefault(); handleAddfriend(user)}}></i> {user.username}</p>
+                                )
+                            return null;
+                        })}
+                    </div>
+                </div>
+                <div className="friendlist">
+                    {friendlist?.map((friend) => (
+                        <p className="friendname" key={friend}><i className="fa-regular fa-user usericon"></i> {friend} <i className="fa-regular fa-trash-can trashcanicon" onClick={(e) => {e.preventDefault(); handleDeletefriend(friend)}}></i></p>
                     ))}
                 </div>
             </div>

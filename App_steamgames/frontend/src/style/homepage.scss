@@ -1,5 +1,8 @@
 body {
-    background-color: #131124;
+    // background-color: rgb(5, 28, 60);
+    background-image: url(../images/bg.jpg);
+    background-size: cover;
+    background-position: 0% 17%;
     color: white;
 }
 
@@ -7,18 +10,49 @@ body {
     height: 100vh;
     display: flex;
 
-    .friendSection {
+    .historySection {
         flex: 1;
         display: flex;
         flex-direction: column;
-        border-right: 1px solid white;
+        // border-right: 1px solid white;
         gap: 26px;
+        overflow: hidden;
 
         .title {
             font-size: 28px;
             font-weight: bold;
             margin: 0 auto;
             padding-top: 20px;
+        }
+
+        .historylist {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            text-decoration: underline;
+
+            .historyrecord {
+                font-size: 18px;
+                max-width: 90%;
+                word-break: break-all;
+                cursor: pointer;
+                text-align: center;
+
+                .deleteicon {
+                    margin-left: 4px;
+                    display: none;
+                    &:hover {
+                        color: antiquewhite;
+                    }
+                }
+
+                &:hover {
+                    .deleteicon {
+                        display: inline;
+                    }
+                }
+            }
         }
     }
 
@@ -57,7 +91,7 @@ body {
             border: 3px solid white;
             border-radius: 6px;
             padding: 10px;
-            background-color: #131124;
+            background-color: #173223;
             position: absolute;
             top: 140px;
             z-index: 3;
@@ -346,45 +380,80 @@ body {
         }
     }
 
-    .historySection {
+    .friendSection {
         flex: 1;
         display: flex;
         flex-direction: column;
-        border-left: 1px solid white;
-        gap: 26px;
-        overflow: hidden;
+        align-items: center;
+        justify-self: center;
+        // border-left: 1px solid white;
+        gap: 20px;
 
         .title {
             font-size: 28px;
             font-weight: bold;
             margin: 0 auto;
             padding-top: 20px;
+            margin-bottom: -16px;
         }
 
-        .historylist {
+        .disturbmodecontrol {
+            margin: 0 auto;
+        }
+
+        .searchuser {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 18px;
-            text-decoration: underline;
+            justify-content: center;
+            gap: 4px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid lightgray;
 
-            .historyrecord {
+            input {
+                font-size: 14px;
+                width: 82%;
+                border-radius: 4px;
+            }
+
+            .resultlist {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 4px;
+
+                .newfriend {
+                    .addfriendicon {
+                        cursor: pointer;
+                        margin-right: 4px;
+                        &:hover {
+                            color: antiquewhite;
+                        }
+                    }
+                }
+            }
+        }
+
+        .friendlist {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            .friendname {
                 font-size: 18px;
-                max-width: 90%;
-                word-break: break-all;
-                cursor: pointer;
-                text-align: center;
 
-                .deleteicon {
-                    margin-left: 4px;
-                    display: none;
+                .trashcanicon {
+                    cursor: pointer;
                     &:hover {
                         color: antiquewhite;
                     }
+                    display: none;
                 }
 
                 &:hover {
-                    .deleteicon {
+                    .trashcanicon {
                         display: inline;
                     }
                 }
