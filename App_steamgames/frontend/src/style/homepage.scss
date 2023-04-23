@@ -1,21 +1,17 @@
-body {
-    // background-color: rgb(5, 28, 60);
+.homepagewrapper {
+    height: 100vh;
+    display: flex;
     background-image: url(../images/bg.jpg);
     background-size: cover;
     background-position: 0% 17%;
     color: white;
-}
-
-.homepagewrapper {
-    height: 100vh;
-    display: flex;
 
     .historySection {
         flex: 1;
         display: flex;
         flex-direction: column;
-        // border-right: 1px solid white;
-        gap: 26px;
+        border-right: 1px dashed #265b37;
+        gap: 10px;
         overflow: hidden;
 
         .title {
@@ -29,7 +25,7 @@ body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 18px;
+            gap: 16px;
             text-decoration: underline;
 
             .historyrecord {
@@ -54,13 +50,31 @@ body {
                 }
             }
         }
+
+        .reportbutton {
+            margin: 0 auto;
+            
+            button {
+                padding: 4px 6px;
+                cursor: pointer;
+                font-size: 16px;
+                border-radius: 4px;
+                color: white;
+                background-color: #517936;
+                border: 1px solid #ACC243;
+                
+                &:hover {
+                    background-color: #4a6f32;
+                }
+            }
+        }
     }
 
     .welcomeSection {
         flex: 5;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 10px;
         padding-top: 20px;
         padding-bottom: 20px;
         overflow-y: auto;
@@ -93,7 +107,7 @@ body {
             padding: 10px;
             background-color: #173223;
             position: absolute;
-            top: 140px;
+            top: 130px;
             z-index: 3;
 
             table {
@@ -131,7 +145,7 @@ body {
             justify-content: center;
             gap: 20px;
             position: absolute;
-            top: 200px;
+            top: 180px;
             z-index: 2;
 
             .steamRating {

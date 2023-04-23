@@ -4,6 +4,7 @@ import Register from "./pages/Register";
 import Homepage from "./pages/Homepage";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
+import SearchReport from "./pages/Report";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ProtectedRoute><Homepage /></ProtectedRoute>} />
+        <Route path="report" element={<ProtectedRoute><SearchReport /></ProtectedRoute>} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
       </Routes>

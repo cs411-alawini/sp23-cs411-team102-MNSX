@@ -1,0 +1,52 @@
+body {
+    background-image: url(../images/bg.jpg);
+    background-size: cover;
+    background-position: 0% 25%;
+    color: white;
+}
+
+.reportWrapper {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    gap: 24px;
+
+    .textsection {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+        max-width: 88%;
+
+        .statisticNumber {
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: rgb(230, 200, 161);
+        }
+    }
+
+    .genreReport {
+        table {
+            caption {
+                font-family:Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 16px;
+                color: #DAEA9B;
+            }
+
+            th {
+                padding: 4px 10px;
+                text-align: center;
+                border-bottom: 1px solid rgb(188, 188, 188);
+            }
+
+            td {
+                padding: 1px 10px;
+                text-align: center;
+            }
+        }
+    }
+}

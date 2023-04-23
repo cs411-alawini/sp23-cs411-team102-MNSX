@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import axios from "axios";
 import "../style/homepage.scss"
@@ -99,6 +100,12 @@ const Homepage = () => {
         setUserlist(userlist.filter((u) => {return u !== newfriend}));
         setFriendlist(friendlist.concat([newfriend.username]));
         setFriendsNum(friendsNum + 1);
+    };
+
+    const navigate = useNavigate();
+    const handleReport = (e) => {
+        e.preventDefault();
+        navigate("/report");
     };
 
 
@@ -203,6 +210,9 @@ const Homepage = () => {
                     {searchHistory?.map((history) => (
                         <p className="historyrecord" key={history.searchID} onClick={() => ClickHistory(history.gameID)}>{history.gameName}<span className="deleteicon"><i className="fa-regular fa-trash-can" onClick={(e) => {e.stopPropagation(); DeleteHistory(history.searchID)}}></i></span></p>
                     ))}
+                </div>
+                <div className="reportbutton">
+                    <button onClick={(e) => handleReport(e)}>Generate Report</button>
                 </div>
             </div>
             <div className="welcomeSection" ref={welcomeSectionRef}>
