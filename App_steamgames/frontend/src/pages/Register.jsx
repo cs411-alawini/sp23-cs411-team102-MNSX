@@ -13,6 +13,7 @@ const Register = () => {
     });
 
     const [err, setErr] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         setUserinfo((prev) => ({...prev, [e.target.name]: e.target.value}));
@@ -22,6 +23,7 @@ const Register = () => {
     const {login} = useContext(AuthContext);
 
     const handleClick = async (e) => {
+        setIsLoading(true);
         e.preventDefault();
 
         try {
@@ -33,6 +35,7 @@ const Register = () => {
         } catch (err) {
             setErr(err.response.data.message);
         }
+        setIsLoading(false);
     };
 
 
@@ -45,7 +48,7 @@ const Register = () => {
                     <input type="username" placeholder="Username" name="username" onChange={handleChange} />
                     <input type="password" placeholder="Password" name="password" onChange={handleChange} />
                     {err && <p className="errMessage">{err}</p>}
-                    <button onClick={handleClick}>Sign up</button>
+                    <button onClick={handleClick}>Sign up {isLoading && <i className="fa fa-circle-o-notch fa-spin"></i>}</button>
                 </form>
                 <p>Already have an account? <Link to="/login">Login here!</Link></p>
             </div>
