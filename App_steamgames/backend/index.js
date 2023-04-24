@@ -16,7 +16,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Credentials", true);
     next();
 });
-app.use(cors({origin: "*"}));
+app.use(cors({origin: "https://cs411-finalproject-378600.uc.r.appspot.com"}));
 app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
