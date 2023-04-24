@@ -53,7 +53,7 @@ userRoutes.post("/login", (req, res) => {
                 // Generate user jwt token and cookie
                 const token = jwt.sign({username: sqlData[0].username}, "CS411finalprojectsteamgamessecretkey");
                 // const {password, ...others} = sqlData[0];
-                res.cookie("accessToken", token, {httpOnly: true}).status(200).json({message: 'User login!', others: {username: sqlData[0].username}});
+                res.cookie("accessToken", token, {secure: true, sameSite: "none"}).status(200).json({message: 'User login!', others: {username: sqlData[0].username}});
             }
         }
     });
@@ -77,7 +77,7 @@ userRoutes.post("/findusers", (req, res) => {
     // varify user authentication
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json({message: "User not logged in!"});
-    jwt.verify(token, process.env.SECRET_KEY, (err, userinfo) => {
+    jwt.verify(token, "CS411finalprojectsteamgamessecretkey", (err, userinfo) => {
         if (err) return res.status(403).json({message: "Token is invalid!"});
         else {
             var username = userinfo.username;
@@ -95,7 +95,7 @@ userRoutes.post("/findusers", (req, res) => {
  * To varify user's cookie for authenticaiton (use inside an API endpoint function):
  * const token = req.cookies.accessToken;
  * if (!token) return res.status(401).json({message: "User not logged in!"});
- * jwt.verify(token, process.env.SECRET_KEY, (err, userinfo) => {
+ * jwt.verify(token, "CS411finalprojectsteamgamessecretkey", (err, userinfo) => {
  *     if (err) return res.status(403).json({message: "Token is invalid!"});
  *     else {......}
  * });

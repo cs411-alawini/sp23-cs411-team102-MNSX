@@ -10,7 +10,7 @@ friendRoutes.get("/friendlist", (req, res) => {
     // varify user authentication
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json({message: "User not logged in!"});
-    jwt.verify(token, process.env.SECRET_KEY, (err, userinfo) => {
+    jwt.verify(token, "CS411finalprojectsteamgamessecretkey", (err, userinfo) => {
         if (err) return res.status(403).json({message: "Token is invalid!"});
         else {
             var username = userinfo.username;
@@ -32,7 +32,7 @@ friendRoutes.post("/remove", (req, res) => {
     // varify user authentication
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json({message: "User not logged in!"});
-    jwt.verify(token, process.env.SECRET_KEY, (err, userinfo) => {
+    jwt.verify(token, "CS411finalprojectsteamgamessecretkey", (err, userinfo) => {
         if (err) return res.status(403).json({message: "Token is invalid!"});
         else {
             var username = userinfo.username;
@@ -60,7 +60,7 @@ friendRoutes.post("/add", (req, res) => {
     // varify user authentication
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json({message: "User not logged in!"});
-    jwt.verify(token, process.env.SECRET_KEY, (err, userinfo) => {
+    jwt.verify(token, "CS411finalprojectsteamgamessecretkey", (err, userinfo) => {
         if (err) return res.status(403).json({message: "Token is invalid!"});
         else {
             var username = userinfo.username;
@@ -86,7 +86,7 @@ friendRoutes.get("/getstatus", (req, res) => {
     // varify user authentication
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json({message: "User not logged in!"});
-    jwt.verify(token, process.env.SECRET_KEY, (err, userinfo) => {
+    jwt.verify(token, "CS411finalprojectsteamgamessecretkey", (err, userinfo) => {
         if (err) return res.status(403).json({message: "Token is invalid!"});
         else {
             var username = userinfo.username;
@@ -108,7 +108,7 @@ friendRoutes.post("/changestatus", (req, res) => {
     // varify user authentication
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json({message: "User not logged in!"});
-    jwt.verify(token, process.env.SECRET_KEY, (err, userinfo) => {
+    jwt.verify(token, "CS411finalprojectsteamgamessecretkey", (err, userinfo) => {
         if (err) return res.status(403).json({message: "Token is invalid!"});
         else {
             var username = userinfo.username;
@@ -128,7 +128,7 @@ friendRoutes.get("/getnum", (req, res) => {
     // varify user authentication
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json({message: "User not logged in!"});
-    jwt.verify(token, process.env.SECRET_KEY, (err, userinfo) => {
+    jwt.verify(token, "CS411finalprojectsteamgamessecretkey", (err, userinfo) => {
         if (err) return res.status(403).json({message: "Token is invalid!"});
         else {
             var username = userinfo.username;
