@@ -16,12 +16,12 @@ const SearchReport = () => {
     
     useEffect(() => {
         const getGenreReport = async () => {
-            const res = await axios.post("http://localhost:8800/api/report/generate/genrereport", {}, {withCredentials: true});
+            const res = await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/report/generate/genrereport", {}, {withCredentials: true});
             setGenreReport(res.data.GenreReport[0]);
         };
 
         const getGameReport = async () => {
-            const res = await axios.post("http://localhost:8800/api/report/generate/gamereport", {}, {withCredentials: true});
+            const res = await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/report/generate/gamereport", {}, {withCredentials: true});
             setTotalSearchNum(res.data.GameReport[0].TotalSearchNum);
             setSearchDistinctNum(res.data.GameReport[0].SearchDistinctNum);
             setMostSearchgameID(res.data.GameReport[0].MostSearchgameID);

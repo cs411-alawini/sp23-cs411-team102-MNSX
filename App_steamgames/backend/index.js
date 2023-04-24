@@ -5,11 +5,9 @@ import gameRoutes from "./routes/games.js";
 import friendRoutes from "./routes/friends.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { config } from 'dotenv';
 import historyRoutes from "./routes/history.js";
 import ratingRoutes from "./routes/rating.js";
 import reportRoutes from "./routes/report.js";
-config();
 
 
 const app = express();
@@ -18,7 +16,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Credentials", true);
     next();
 });
-app.use(cors({origin: "http://localhost:3000"}));
+app.use(cors({origin: "*"}));
 app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
@@ -29,10 +27,10 @@ app.use("/api/rating", ratingRoutes);
 app.use("/api/report", reportRoutes);
 
 export const db = mysql.createConnection({
-    host: process.env.DB_host,
-    user: process.env.DB_user,
-    password: process.env.DB_password,
-    database: process.env.DB_name
+    user: "root",
+    password: "steamgames",
+    database: "steamgames",
+    socketPath: "/cloudsql/cs411-finalproject-378600:us-central1:steamgames"
 });
 
 db.connect((err) => {
@@ -43,8 +41,4 @@ db.connect((err) => {
     console.log("Database Connected");
 });
 
-var port = process.env.PORT || 8800;
-
-app.listen(port, () => {
-    console.log("Server running on port " + port);
-});
+export { app as backendapp };

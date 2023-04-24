@@ -26,7 +26,7 @@ const Register = () => {
 
         try {
             if (userinfo.username && userinfo.password) {
-                await axios.post("http://localhost:8800/api/users/register", userinfo);
+                await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/users/register", userinfo);
                 await login(userinfo);
                 navigate("/");
             }

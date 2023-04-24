@@ -8,7 +8,7 @@ export const AuthContextProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
 
     const login = async (inputs) => {
-        const res = await axios.post("http://localhost:8800/api/users/login", inputs, {
+        const res = await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/users/login", inputs, {
             withCredentials: true
         });
         setCurrentUser(res.data.others);

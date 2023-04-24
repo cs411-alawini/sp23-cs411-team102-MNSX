@@ -2,8 +2,6 @@ import express from "express"
 import { db } from "../index.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-import { config } from 'dotenv';
-config();
 
 
 const userRoutes = express.Router();
@@ -53,7 +51,7 @@ userRoutes.post("/login", (req, res) => {
             if(!checkPassword) res.status(400).json({message: 'Wrong password or username!'});
             else {
                 // Generate user jwt token and cookie
-                const token = jwt.sign({username: sqlData[0].username}, process.env.SECRET_KEY);
+                const token = jwt.sign({username: sqlData[0].username}, "CS411finalprojectsteamgamessecretkey");
                 // const {password, ...others} = sqlData[0];
                 res.cookie("accessToken", token, {httpOnly: true}).status(200).json({message: 'User login!', others: {username: sqlData[0].username}});
             }

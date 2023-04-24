@@ -10,11 +10,11 @@ const GameInfo = (props) => {
 
     const handleClick = async () => {
         setShowinfo(true);
-        await axios.post("http://localhost:8800/api/history/add", {
+        await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/history/add", {
             gameID: game.gameID,
             gameName: game.name
         }, {withCredentials: true});
-        const res = await axios.get(`http://localhost:8800/api/rating/get/${game.gameID}`, {withCredentials: true});
+        const res = await axios.get(`https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/rating/get/${game.gameID}`, {withCredentials: true});
         if (res.data.rating.length > 0) {
             setCurrentRaing(res.data.rating[0].rating);
         }
@@ -33,7 +33,7 @@ const GameInfo = (props) => {
     const setUserRating = async (idx) => {
         if (currentRating !== idx) {
             setCurrentRaing(idx);
-            await axios.post("http://localhost:8800/api/rating/set", {
+            await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/rating/set", {
                 gameid: game.gameID,
                 rating: idx
             }, {withCredentials: true});

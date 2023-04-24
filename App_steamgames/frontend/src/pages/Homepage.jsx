@@ -40,19 +40,19 @@ const Homepage = () => {
     const genreinfoStyle = {left: offsetLeft};
 
     const handleLogout = async () => {
-        await axios.post("http://localhost:8800/api/users/logout");
+        await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/users/logout");
         clearUser();
     };
 
     const ClickHistory = async (gameID) => {
         setGamename("");
         setSearchResults(null);
-        const res = await axios.get(`http://localhost:8800/api/games/search/${gameID}`);
+        const res = await axios.get(`https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/games/search/${gameID}`);
         setSearchResults(res.data.gameinfo);
     };
 
     const DeleteHistory = async (searchID) => {
-        await axios.delete(`http://localhost:8800/api/history/delete/${searchID}`, {withCredentials: true});
+        await axios.delete(`https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/history/delete/${searchID}`, {withCredentials: true});
     }
 
     const welcomeSectionRef = useRef();
@@ -72,7 +72,7 @@ const Homepage = () => {
     };
 
     const updateAddfriendStatus = async () => {
-        await axios.post("http://localhost:8800/api/friends/changestatus", {
+        await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/friends/changestatus", {
             status: (addfriendstatus ? "False" : "True")
         }, {withCredentials: true});
 
@@ -80,7 +80,7 @@ const Homepage = () => {
     };
 
     const handleDeletefriend = async (friendname) => {
-        await axios.post("http://localhost:8800/api/friends/remove", {
+        await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/friends/remove", {
             friendname: friendname
         }, {withCredentials: true});
         setFriendlist(friendlist.filter((f) => {return f !== friendname}));
@@ -94,7 +94,7 @@ const Homepage = () => {
     };
 
     const handleAddfriend = async (newfriend) => {
-        await axios.post("http://localhost:8800/api/friends/add", {
+        await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/friends/add", {
             friendname: newfriend.username
         }, {withCredentials: true});
         setUserlist(userlist.filter((u) => {return u !== newfriend}));
@@ -111,18 +111,18 @@ const Homepage = () => {
 
     useEffect(() => {
         const getgenreinfo = async () => {
-            const res = await axios.get("http://localhost:8800/api/games/genreinfo");
+            const res = await axios.get("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/games/genreinfo");
             setGenreinfo(res.data.data);
         };
 
         const getaddfriendstatus = async () => {
-            const res = await axios.get("http://localhost:8800/api/friends/getstatus", {withCredentials: true});
+            const res = await axios.get("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/friends/getstatus", {withCredentials: true});
             if (res.data.currentStatus[0].status === "True") setAddfriendstatus(true);
             else setAddfriendstatus(false);
         };
 
         const getfriendlist = async () => {
-            const res = await axios.get("http://localhost:8800/api/friends/friendlist", {withCredentials: true});
+            const res = await axios.get("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/friends/friendlist", {withCredentials: true});
             var flist = [];
             res.data.friendlist.map((f) => {
                 flist.push(f.friendname);
@@ -132,7 +132,7 @@ const Homepage = () => {
         };
 
         const getfriendsNum = async () => {
-            const res = await axios.get("http://localhost:8800/api/friends/getnum", {withCredentials: true});
+            const res = await axios.get("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/friends/getnum", {withCredentials: true});
             setFriendsNum(res.data.friendsNum[0].friendsNum);
         };
 
@@ -144,7 +144,7 @@ const Homepage = () => {
 
     useEffect(() => {
         const searchusers = async () => {
-            const res = await axios.post("http://localhost:8800/api/users/findusers", {
+            const res = await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/users/findusers", {
                 searchname: searchname
             }, {withCredentials: true});
             setUserlist(res.data.userlist);
@@ -172,8 +172,8 @@ const Homepage = () => {
                 genreIntersect: false,
                 platformIntersect: false,
                 limit: 30
-            })) var APIurl = `http://localhost:8800/api/games/search`;
-            else APIurl = `http://localhost:8800/api/games/search?steamRating={"low": ${queryParams.steamRating_low}, "high": ${queryParams.steamRating_high}}&price={"low": ${queryParams.price_low}, "high": ${queryParams.price_high}}&genre={"genre": [${queryParams.genre}]}&genreIntersect=${additionQparams.genreIntersect}&platform={"platform": [${queryParams.platform}]}&platformIntersect=${additionQparams.platformIntersect}&limit=${additionQparams.limit}`;
+            })) var APIurl = `https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/games/search`;
+            else APIurl = `https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/games/search?steamRating={"low": ${queryParams.steamRating_low}, "high": ${queryParams.steamRating_high}}&price={"low": ${queryParams.price_low}, "high": ${queryParams.price_high}}&genre={"genre": [${queryParams.genre}]}&genreIntersect=${additionQparams.genreIntersect}&platform={"platform": [${queryParams.platform}]}&platformIntersect=${additionQparams.platformIntersect}&limit=${additionQparams.limit}`;
 
             const res = await axios.post(APIurl, {
                 name: gamename
@@ -194,7 +194,7 @@ const Homepage = () => {
 
     useEffect(() => {
         const getHistory = async () => {
-            const res = await axios.post("http://localhost:8800/api/history/get", {}, {withCredentials: true});
+            const res = await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/history/get", {}, {withCredentials: true});
             setSearchHistory(res.data.history);
         };
 

@@ -8,17 +8,17 @@ Place the `.env` file under `backend` folder.
 
 ### REST APIs
 #### User Routes (Authentication):
-- `http://localhost:8800/api/users/register` - (POST) User registration
-- `http://localhost:8800/api/users/login` - (POST) User login
-- `http://localhost:8800/api/users/logout` - (POST) User logout
+- `https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/users/register` - (POST) User registration
+- `https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/users/login` - (POST) User login
+- `https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/users/logout` - (POST) User logout
 
 
 #### Game Routes:
-- `http://localhost:8800/api/games/...`
+- `https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/games/...`
 
 
 #### Friend Routes:
-- `http://localhost:8800/api/friends/...`
+- `https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/friends/...`
 
 
 #### ......
