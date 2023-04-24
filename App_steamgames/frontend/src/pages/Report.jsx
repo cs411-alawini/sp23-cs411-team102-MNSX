@@ -10,23 +10,28 @@ const SearchReport = () => {
     const [genreReport, setGenreReport] = useState(null);
     const [totalSearchNum, setTotalSearchNum] = useState(null);
     const [searchDistinctNum, setSearchDistinctNum] = useState(null);
-    const [mostSearchgameID, setMostSearchgameID] = useState(null);
+    const [mostSearchgameName, setMostSearchgameName] = useState(null);
     const [highRateGenreName, setHighRateGenreName] = useState(null);
     const [highRateGamelist, setHighRateGamelist] = useState(null);
     
     useEffect(() => {
         const getGenreReport = async () => {
-            const res = await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/report/generate/genrereport", {}, {withCredentials: true});
+            const res = await axios.post("http://localhost:8800/api/report/generate/genrereport", {}, {withCredentials: true});
             setGenreReport(res.data.GenreReport[0]);
         };
 
         const getGameReport = async () => {
-            const res = await axios.post("https://us-central1-cs411-finalproject-378600.cloudfunctions.net/cs411-steamgames-backend/api/report/generate/gamereport", {}, {withCredentials: true});
-            setTotalSearchNum(res.data.GameReport[0].TotalSearchNum);
-            setSearchDistinctNum(res.data.GameReport[0].SearchDistinctNum);
-            setMostSearchgameID(res.data.GameReport[0].MostSearchgameID);
-            setHighRateGenreName(res.data.GameReport[0].HighRateGenreName);
-            setHighRateGamelist(res.data.GameReport[0].HighRateGamelist);
+            const res = await axios.post("http://localhost:8800/api/report/generate/gamereport", {}, {withCredentials: true});
+            if (res.data.GameReport[0].TotalSearchNum === null) setTotalSearchNum("__");
+            else setTotalSearchNum(res.data.GameReport[0].TotalSearchNum);
+            if (res.data.GameReport[0].SearchDistinctNum === null) setSearchDistinctNum("__");
+            else setSearchDistinctNum(res.data.GameReport[0].SearchDistinctNum);
+            if (res.data.GameReport[0].MostSearchgameName === null) setMostSearchgameName("__");
+            else setMostSearchgameName(res.data.GameReport[0].MostSearchgameName);
+            if (res.data.GameReport[0].HighRateGenreName === null) setHighRateGenreName("__");
+            else setHighRateGenreName(res.data.GameReport[0].HighRateGenreName);
+            if (res.data.GameReport[0].HighRateGamelist === "") setHighRateGamelist("__");
+            else setHighRateGamelist(res.data.GameReport[0].HighRateGamelist);
         };
 
         getGenreReport();
@@ -39,7 +44,7 @@ const SearchReport = () => {
             <div className="textsection">
                 <p>Hi <span className="statisticNumber">{currentUser.username}</span>!</p>
                 <p>So far, you've searched <span className="statisticNumber">{totalSearchNum}</span> times for <span className="statisticNumber">{searchDistinctNum}</span> games.</p>
-                <p>You searched for <span className="statisticNumber">{mostSearchgameID}</span> most times, hope you enjoy this game!</p>
+                <p>You searched for <span className="statisticNumber">{mostSearchgameName}</span> most times, hope you enjoy this game!</p>
                 <p>You give a high rate on <span className="statisticNumber">{highRateGenreName}</span> games, and your favourite games are <span className="statisticNumber">{highRateGamelist}</span>...</p>
             </div>
             <div className="genreReport">
