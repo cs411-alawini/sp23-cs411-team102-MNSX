@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import historyRoutes from "./routes/history.js";
 import ratingRoutes from "./routes/rating.js";
 import reportRoutes from "./routes/report.js";
+import { config } from 'dotenv';
+config();
 
 
 const app = express();
@@ -27,10 +29,10 @@ app.use("/api/rating", ratingRoutes);
 app.use("/api/report", reportRoutes);
 
 export const db = mysql.createConnection({
-    user: "root",
-    password: "steamgames",
-    database: "steamgames",
-    socketPath: "/cloudsql/cs411-finalproject-378600:us-central1:steamgames"
+    user: process.env.DB_user,
+    password: process.env.DB_password,
+    database: process.env.DB_name,
+    socketPath: process.env.DB_socketPath
 });
 
 db.connect((err) => {

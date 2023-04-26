@@ -12,7 +12,7 @@ ratingRoutes.get("/get/:id", (req, res) => {
     // varify user authentication
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json({message: "User not logged in!"});
-    jwt.verify(token, "CS411finalprojectsteamgamessecretkey", (err, userinfo) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err, userinfo) => {
         if (err) return res.status(403).json({message: "Token is invalid!"});
         else {
             var username = userinfo.username;
@@ -37,7 +37,7 @@ ratingRoutes.post("/set", (req, res) => {
     // varify user authentication
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json({message: "User not logged in!"});
-    jwt.verify(token, "CS411finalprojectsteamgamessecretkey", (err, userinfo) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err, userinfo) => {
         if (err) return res.status(403).json({message: "Token is invalid!"});
         else {
             var username = userinfo.username;
